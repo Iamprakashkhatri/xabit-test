@@ -1,5 +1,5 @@
 from django.db import models
-
+from common.models import TimeStampedModel
 class Product(models.Model):
     name = models.CharField(max_length=255, unique=True)
     quantity = models.IntegerField(blank=True, default=0)
@@ -35,3 +35,11 @@ class ProductVarient(models.Model):
 
     def __str__(self):
         return self.varient_name
+
+
+class Price(TimeStampedModel):
+    product= models.ForeignKey(Product, on_delete=models.CASCADE, related_name="price")
+    price = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.product.name}"

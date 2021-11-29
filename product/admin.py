@@ -4,7 +4,8 @@ from .models import (
     Product,
     Attribute,
     AttributeValue,
-    ProductVarient
+    ProductVarient,
+    Price
 )
 
 class ProductVarientInline(admin.StackedInline):
@@ -19,3 +20,4 @@ class CourseAdmin(admin.ModelAdmin):
 
 admin.site.register(Attribute)
 admin.site.register(AttributeValue)
+admin.site.register(Price)
