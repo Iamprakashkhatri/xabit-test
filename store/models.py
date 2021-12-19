@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 from common.models import TimeStampedModel,Identifier,Amenities,Location
 
-class OurClient(Identifier,Location):
+class Company(Identifier,Location):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     pan = models.PositiveIntegerField()
     company_bills_code = models.CharField(max_length=50, unique=True, blank=True, null=True)
@@ -14,8 +14,8 @@ class OurClient(Identifier,Location):
     logo = models.ImageField(upload_to="product/image", blank=True, null=True)
 
     class Meta:
-        verbose_name = "Client"
-        verbose_name_plural = "Clients"
+        verbose_name = "Comany"
+        verbose_name_plural = "Companies"
 
     def __str__(self):
         return f'{self.name}'
@@ -35,31 +35,31 @@ class OurClient(Identifier,Location):
         if not self.company_code:
             self.company_code = str(self.name)
         
-        return super(OurClient,self).save(*args, **kwargs)
+        return super(Company,self).save(*args, **kwargs)
 
 class Store(Identifier,Location,Amenities):
     contact_number=models.CharField(max_length=12)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    client = models.ForeignKey(OurClient, on_delete=models.CASCADE, related_name="store")
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name="store")
     franchise = models.BooleanField()
   
     def __str__(self):
         return self.name
 
 WEEKDAYS = [
-  (1,"Monday"),
-  (2,"Tuesday"),
-  (3,"Wednesday"),
-  (4,"Thursday"),
-  (5,"Friday"),
-  (6,"Saturday"),
-  (7,"Sunday"),
+  ("Monday","Monday"),
+  ("Tuesday","Tuesday"),
+  ("Wednesday","Wednesday"),
+  ("Thursday","Thursday"),
+  ("Friday","Friday"),
+  ("Saturday","Saturday"),
+  ("Sunday","Sunday"),
 ]
 
 class OpeningHours(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name="opening_hours")
-    weekday = models.IntegerField(choices=WEEKDAYS,unique=True)
+    weekday = models.CharField(max_length=200,choices=WEEKDAYS,unique=True)
     from_hour = models.TimeField()
     to_hour = models.TimeField()
 

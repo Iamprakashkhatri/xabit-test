@@ -34,10 +34,10 @@ class Amenities(models.Model):
 
 class Location(models.Model):
     country = models.CharField(max_length=255,default="Nepal")
-    street_address = models.CharField(max_length=500, default="")
-    city = models.CharField(max_length=255, default="")
-    state = models.CharField(max_length=255, default="")
-    postal_code = models.CharField(max_length=255, default="")
+    street_address = models.CharField(max_length=500, default="",null=True,blank=True)
+    city = models.CharField(max_length=255, default="",null=True,blank=True)
+    state = models.CharField(max_length=255, default="",null=True,blank=True)
+    postal_code = models.CharField(max_length=255, default="",null=True,blank=True)
 
     class Meta:
         abstract = True
